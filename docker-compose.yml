@@ -1,0 +1,20 @@
+version: '3'
+services:
+  nimbus:
+    restart: always
+    build: ./
+    volumes:
+      - ./history:/usr/src/app/history
+      - ./config.js:/usr/src/app/config.js
+    links:
+      - redis
+    environment:
+     - HOST
+     - PORT
+    ports: # you can comment this out when using the nginx frontend
+      - "${PORT}:${PORT}"
+
+  redis:
+    image: redis:latest
+    volumes:
+      - ./volumes/redis:/data
